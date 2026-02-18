@@ -1,0 +1,58 @@
+{% load static %}
+{% csrf_token %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'speedtest/css/style.css' %}">
+
+<body>
+    
+    <div class="container mt-5">
+        <div class="glass-card p-5 text-center">
+            <h1 class="mb-4 text-light">Trippin on Typin <small class="text-info">Typin</small></h1>
+            
+            <div class="row mb-4">
+                <div class="col-md-4"><div class="stat-box">WPM: <span id="wpm">0</span></div></div>
+                <div class="col-md-4"><div class="stat-box">Accuracy: <span id="accuracy">100</span>%</div></div>
+                <div class="col-md-4"><div class="stat-box">Timer: <span id="timer">60</span>s</div></div>
+            </div>
+            
+            <div class="mb-4">
+                <input type="text" id="username-input" class="form-control bg-dark text-light border-info w-50 mx-auto" placeholder="Enter your name..." value="Guest">
+            </div>
+            <div id="text-display" class="typing-area mb-4">
+                {{ random_text }}
+            </div>
+            
+            
+            <input type="text" id="typing-input" class="visually-hidden" autofocus>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="mt-5">
+            <h3 class="text-info">Top Performers</h3>
+            <table class="table table-dark table-hover mt-3">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>WPM</th>
+                        <th>Accuracy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for score in leaderboard %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ score.username }}</td>
+                        <td>{{ score.wpm }}</td>
+                        <td>{{ score.accuracy }}%</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="4">No scores yet. Be the first!</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="{% static 'speedtest/js/script.js' %}"></script>
+</body>
